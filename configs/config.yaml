@@ -1,0 +1,46 @@
+# AI Assistant Configuration
+
+assistant:
+  name: "AI Assistant"
+  version: "1.0.0"
+
+llm:
+  provider: "openai"  # openai, anthropic, local
+  model: "astron-code-latest"
+  api_key: "${OPENAI_API_KEY}"
+  base_url: "https://maas-coding-api.cn-huabei-1.xf-yun.com/v2"
+  temperature: 0.7
+  max_tokens: 4096
+
+plugins:
+  enabled:
+    - file
+    - shell
+    - code
+    - email
+    - git
+  directory: "./plugins"
+
+mcp:
+  enabled: true
+  servers:
+    - name: "filesystem"
+      command: "mcp-filesystem"
+      args: ["--root", "/home/user"]
+
+permissions:
+  default_mode: "ask"  # ask, auto, deny
+  allowed_paths:
+    - "/home/user/projects"
+  denied_commands:
+    - "rm -rf"
+    - "sudo"
+
+storage:
+  type: "sqlite"
+  path: "./data/assistant.db"
+
+logging:
+  level: "info"
+  format: "json"
+  output: "stdout"
