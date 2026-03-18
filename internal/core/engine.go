@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"sync"
 
-	"assistant/internal/config"
-	"assistant/internal/llm"
-	"assistant/internal/plugin"
-	"assistant/pkg/types"
+	"partner/internal/config"
+	"partner/internal/llm"
+	"partner/internal/plugin"
+	"partner/pkg/types"
 )
 
 // Engine is the main AI assistant engine

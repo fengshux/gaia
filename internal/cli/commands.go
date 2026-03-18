@@ -7,9 +7,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"assistant/internal/config"
-	"assistant/internal/mcp"
-	"assistant/internal/tool"
+	"partner/internal/config"
+	"partner/internal/mcp"
+	"partner/internal/tool"
 
 	"github.com/charmbracelet/lipgloss"
 	"gopkg.in/yaml.v3"

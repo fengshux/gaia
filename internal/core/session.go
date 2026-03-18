@@ -5,8 +5,8 @@ import (
 	"sync"
 	"time"
 
-	"assistant/pkg/types"
-	"assistant/pkg/utils"
+	"partner/pkg/types"
+	"partner/pkg/utils"
 )
 
 // SessionManager manages conversation sessions

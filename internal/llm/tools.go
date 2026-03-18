@@ -2,7 +2,7 @@
 package llm
 
 import (
-	"assistant/pkg/types"
+	"partner/pkg/types"
 )
 
 // ToolRegistry manages tool registrations

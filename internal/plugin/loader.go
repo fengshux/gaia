@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"plugin"
 
-	"assistant/pkg/utils"
+	"partner/pkg/utils"
 )
 
 // Loader loads plugins from filesystem

@@ -2,7 +2,9 @@
 package llm
 
 import (
-	"assistant/pkg/types"
+	"encoding/json"
+
+	"partner/pkg/types"
 )
 
 // MessageConverter converts between internal and OpenAI message formats
@@ -18,12 +20,14 @@ func (mc *MessageConverter) ToOpenAIMessage(msg types.Message) OpenAIMessage {
 	if len(msg.ToolCalls) > 0 {
 		oaiMsg.ToolCalls = make([]OpenAIToolCall, len(msg.ToolCalls))
 		for i, tc := range msg.ToolCalls {
+			// Convert arguments map to JSON string
+			argsJSON, _ := json.Marshal(tc.Arguments)
 			oaiMsg.ToolCalls[i] = OpenAIToolCall{
 				ID:   tc.ID,
 				Type: "function",
 				Function: OpenAIFunctionCall{
 					Name:      tc.Name,
-					Arguments: tc.Arguments,
+					Arguments: string(argsJSON),
 				},
 			}
 		}
@@ -55,10 +59,19 @@ func (mc *MessageConverter) FromOpenAIMessage(msg OpenAIMessage) types.Message {
 	if len(msg.ToolCalls) > 0 {
 		result.ToolCalls = make([]types.ToolCall, len(msg.ToolCalls))
 		for i, tc := range msg.ToolCalls {
+			// Parse arguments JSON string to map
+			var args map[string]interface{}
+			if tc.Function.Arguments != "" {
+				if err := json.Unmarshal([]byte(tc.Function.Arguments), &args); err != nil {
+					args = make(map[string]interface{})
+				}
+			} else {
+				args = make(map[string]interface{})
+			}
 			result.ToolCalls[i] = types.ToolCall{
 				ID:        tc.ID,
 				Name:      tc.Function.Name,
-				Arguments: tc.Function.Arguments,
+				Arguments: args,
 			}
 		}
 	}
@@ -88,8 +101,8 @@ type OpenAIToolCall struct {
 
 // OpenAIFunctionCall represents an OpenAI function call
 type OpenAIFunctionCall struct {
-	Name      string                 `json:"name"`
-	Arguments map[string]interface{} `json:"arguments"`
+	Name      string `json:"name"`
+	Arguments string `json:"arguments"`
 }
 
 // OpenAITool represents an OpenAI tool definition

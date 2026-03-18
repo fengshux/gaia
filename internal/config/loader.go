@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"assistant/pkg/utils"
+	"partner/pkg/utils"
 
 	"github.com/spf13/viper"
 )

@@ -8,10 +8,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"assistant/internal/config"
-	"assistant/internal/core"
-	"assistant/internal/plugin"
-	"assistant/internal/tool"
+	"partner/internal/config"
+	"partner/internal/core"
+	"partner/internal/plugin"
+	"partner/internal/tool"
 
 	"github.com/spf13/cobra"
 )
@@ -217,6 +217,7 @@ func (a *App) registerBuiltinTools() {
 			tools: []plugin.Tool{
 				tool.NewFileReadTool(),
 				tool.NewFileWriteTool(),
+				tool.NewFileEditTool(),
 				tool.NewFileDeleteTool(),
 				tool.NewFileListTool(),
 				tool.NewFileExistsTool(),

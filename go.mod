@@ -1,4 +1,4 @@
-module assistant
+module partner
 
 go 1.22
 

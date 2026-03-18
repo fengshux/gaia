@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"time"
 
-	"assistant/pkg/types"
-	"assistant/pkg/utils"
+	"partner/pkg/types"
+	"partner/pkg/utils"
 )
 
 // SessionRepository handles session persistence

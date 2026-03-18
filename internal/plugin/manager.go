@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"sync"
 
-	"assistant/pkg/types"
+	"partner/pkg/types"
 )
 
 // Manager manages plugins and their tools

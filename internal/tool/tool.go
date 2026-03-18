@@ -4,7 +4,7 @@ package tool
 import (
 	"context"
 
-	"assistant/pkg/types"
+	"partner/pkg/types"
 )
 
 // Tool interface for tools

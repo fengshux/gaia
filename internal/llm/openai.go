@@ -10,16 +10,16 @@ import (
 	"io"
 	"net/http"
 
-	"assistant/pkg/types"
+	"partner/pkg/types"
 
 	"github.com/go-resty/resty/v2"
 )
 
 // OpenAIProvider implements Provider for OpenAI-compatible APIs
 type OpenAIProvider struct {
-	client   *resty.Client
-	config   ProviderConfig
-	registry *ToolRegistry
+	client    *resty.Client
+	config    ProviderConfig
+	registry  *ToolRegistry
 	converter *MessageConverter
 }
 
@@ -158,6 +158,7 @@ func (p *OpenAIProvider) StreamChat(ctx context.Context, req *ChatRequest) (<-ch
 				return
 			}
 
+			fmt.Println("response: ", string(data))
 			// Parse SSE data
 			var streamResp openAIStreamResponse
 			if err := json.Unmarshal([]byte(data), &streamResp); err != nil {
@@ -175,10 +176,19 @@ func (p *OpenAIProvider) StreamChat(ctx context.Context, req *ChatRequest) (<-ch
 
 				if len(delta.ToolCalls) > 0 {
 					tc := delta.ToolCalls[0]
+					// Parse arguments JSON string to map
+					var args map[string]interface{}
+					if tc.Function.Arguments != "" {
+						if err := json.Unmarshal([]byte(tc.Function.Arguments), &args); err != nil {
+							args = make(map[string]interface{})
+						}
+					} else {
+						args = make(map[string]interface{})
+					}
 					chunk.ToolCall = &types.ToolCall{
-						ID:   tc.ID,
-						Name: tc.Function.Name,
-						Arguments: tc.Function.Arguments,
+						ID:        tc.ID,
+						Name:      tc.Function.Name,
+						Arguments: args,
 					}
 				}
 
@@ -221,14 +231,14 @@ type openAIChatRequest struct {
 }
 
 type openAIChatResponse struct {
-	ID      string   `json:"id"`
-	Object  string   `json:"object"`
-	Created int64    `json:"created"`
-	Model   string   `json:"model"`
+	ID      string `json:"id"`
+	Object  string `json:"object"`
+	Created int64  `json:"created"`
+	Model   string `json:"model"`
 	Choices []struct {
-		Index        int          `json:"index"`
+		Index        int           `json:"index"`
 		Message      OpenAIMessage `json:"message"`
-		FinishReason string       `json:"finish_reason"`
+		FinishReason string        `json:"finish_reason"`
 	} `json:"choices"`
 	Usage struct {
 		PromptTokens     int `json:"prompt_tokens"`
@@ -243,11 +253,11 @@ type openAIStreamResponse struct {
 	Created int64  `json:"created"`
 	Model   string `json:"model"`
 	Choices []struct {
-		Index        int `json:"index"`
-		Delta        struct {
-			Role      string             `json:"role,omitempty"`
-			Content   string             `json:"content,omitempty"`
-			ToolCalls []OpenAIToolCall   `json:"tool_calls,omitempty"`
+		Index int `json:"index"`
+		Delta struct {
+			Role      string           `json:"role,omitempty"`
+			Content   string           `json:"content,omitempty"`
+			ToolCalls []OpenAIToolCall `json:"tool_calls,omitempty"`
 		} `json:"delta"`
 		FinishReason string `json:"finish_reason"`
 	} `json:"choices"`

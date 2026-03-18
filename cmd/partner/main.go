@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"assistant/internal/cli"
+	"partner/internal/cli"
 )
 
 func main() {

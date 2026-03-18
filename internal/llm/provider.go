@@ -4,7 +4,7 @@ package llm
 import (
 	"context"
 
-	"assistant/pkg/types"
+	"partner/pkg/types"
 )
 
 // Provider defines the interface for LLM providers

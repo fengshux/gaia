@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"assistant/pkg/utils"
+	"partner/pkg/utils"
 )
 
 // FileReadTool reads a file
@@ -151,6 +151,116 @@ func (t *FileWriteTool) Execute(ctx context.Context, params map[string]interface
 	}
 
 	return fmt.Sprintf("Successfully wrote %d bytes to %s", len(content), path), nil
+}
+
+// FileEditTool performs string replacement in a file
+type FileEditTool struct{}
+
+// NewFileEditTool creates a new file edit tool
+func NewFileEditTool() *FileEditTool {
+	return &FileEditTool{}
+}
+
+func (t *FileEditTool) Name() string {
+	return "file_edit"
+}
+
+func (t *FileEditTool) Description() string {
+	return "Perform exact string replacement in a file. This is a precise edit operation that replaces a specific old string with a new string."
+}
+
+func (t *FileEditTool) Parameters() interface{} {
+	return ObjectParam{
+		Type: "object",
+		Properties: map[string]interface{}{
+			"path": StringParam{
+				Type:        "string",
+				Description: "The path to the file to edit",
+			},
+			"old_string": StringParam{
+				Type:        "string",
+				Description: "The text to search for and replace",
+			},
+			"new_string": StringParam{
+				Type:        "string",
+				Description: "The text to replace with",
+			},
+			"replace_all": BooleanParam{
+				Type:        "boolean",
+				Description: "Replace all occurrences (default: false, only replace first match)",
+			},
+		},
+		Required: []string{"path", "old_string", "new_string"},
+	}
+}
+
+func (t *FileEditTool) Execute(ctx context.Context, params map[string]interface{}) (interface{}, error) {
+	path, ok := params["path"].(string)
+	if !ok {
+		return nil, fmt.Errorf("path parameter is required")
+	}
+
+	oldString, ok := params["old_string"].(string)
+	if !ok {
+		return nil, fmt.Errorf("old_string parameter is required")
+	}
+
+	newString, ok := params["new_string"].(string)
+	if !ok {
+		return nil, fmt.Errorf("new_string parameter is required")
+	}
+
+	replaceAll := false
+	if v, ok := params["replace_all"].(bool); ok {
+		replaceAll = v
+	}
+
+	path = utils.ExpandPath(path)
+
+	// Read the file
+	content, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read file: %w", err)
+	}
+
+	contentStr := string(content)
+
+	// Check if old_string exists
+	if !strings.Contains(contentStr, oldString) {
+		return nil, fmt.Errorf("old_string not found in file: %s", oldString)
+	}
+
+	// Check for multiple matches when not replacing all
+	matches := strings.Count(contentStr, oldString)
+	if matches > 1 && !replaceAll {
+		return nil, fmt.Errorf("found %d occurrences of old_string, but replace_all is false. Either provide a more specific old_string or set replace_all to true", matches)
+	}
+
+	// Perform replacement
+	var newContent string
+	if replaceAll {
+		newContent = strings.ReplaceAll(contentStr, oldString, newString)
+	} else {
+		newContent = strings.Replace(contentStr, oldString, newString, 1)
+	}
+
+	// Write back to file
+	if err := os.WriteFile(path, []byte(newContent), 0644); err != nil {
+		return nil, fmt.Errorf("failed to write file: %w", err)
+	}
+
+	replacedCount := matches
+	if !replaceAll {
+		replacedCount = 1
+	}
+
+	return map[string]interface{}{
+		"success":        true,
+		"path":           path,
+		"replacements":   replacedCount,
+		"old_string_len": len(oldString),
+		"new_string_len": len(newString),
+	}, nil
 }
 
 // FileDeleteTool deletes a file

@@ -8,8 +8,8 @@ import (
 	"os"
 	"strings"
 
-	"assistant/internal/config"
-	"assistant/internal/core"
+	"partner/internal/config"
+	"partner/internal/core"
 
 	"github.com/charmbracelet/lipgloss"
 )

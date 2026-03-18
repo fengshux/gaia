@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"assistant/pkg/types"
+	"partner/pkg/types"
 )
 
 // ContextManager manages conversation context

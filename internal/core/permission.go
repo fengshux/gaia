@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"strings"
 
-	"assistant/internal/config"
-	"assistant/pkg/types"
-	"assistant/pkg/utils"
+	"partner/internal/config"
+	"partner/pkg/types"
+	"partner/pkg/utils"
 )
 
 // PermissionManager handles permission checks
