@@ -2,7 +2,7 @@
 package llm
 
 import (
-	"partner/pkg/types"
+	"gaia/pkg/types"
 )
 
 // ToolRegistry manages tool registrations

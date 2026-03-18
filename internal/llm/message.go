@@ -4,7 +4,7 @@ package llm
 import (
 	"encoding/json"
 
-	"partner/pkg/types"
+	"gaia/pkg/types"
 )
 
 // MessageConverter converts between internal and OpenAI message formats

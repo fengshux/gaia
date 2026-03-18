@@ -5,8 +5,8 @@ import (
 	"sync"
 	"time"
 
-	"partner/pkg/types"
-	"partner/pkg/utils"
+	"gaia/pkg/types"
+	"gaia/pkg/utils"
 )
 
 // SessionManager manages conversation sessions

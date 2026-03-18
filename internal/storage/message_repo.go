@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"time"
 
-	"partner/pkg/types"
-	"partner/pkg/utils"
+	"gaia/pkg/types"
+	"gaia/pkg/utils"
 )
 
 // MessageRepository handles message persistence

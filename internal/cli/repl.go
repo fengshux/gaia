@@ -8,8 +8,8 @@ import (
 	"os"
 	"strings"
 
-	"partner/internal/config"
-	"partner/internal/core"
+	"gaia/internal/config"
+	"gaia/internal/core"
 
 	"github.com/charmbracelet/lipgloss"
 )
@@ -156,7 +156,7 @@ func (r *REPL) processInput(ctx context.Context, input string) error {
 
 	// Print response
 	if response.Content != "" {
-		fmt.Println(r.aiStyle.Render("Assistant: ") + response.Content)
+		fmt.Println(r.aiStyle.Render("Gaia: ") + response.Content)
 	}
 
 	// Print tool calls if any
@@ -173,7 +173,7 @@ func (r *REPL) processInput(ctx context.Context, input string) error {
 func (r *REPL) printWelcome() {
 	welcome := `
 ╔═══════════════════════════════════════════╗
-║         AI Assistant v1.0.0               ║
+║         Gaia (盖娅) v1.0.0                ║
 ║                                           ║
 ║  Type /help for available commands        ║
 ║  Press Ctrl+C to exit                     ║
@@ -187,7 +187,7 @@ func (r *REPL) printHelp() {
 	help := `
 Available Commands:
   /help, /h, /?    Show this help message
-  /exit, /quit, /q Exit the assistant
+  /exit, /quit, /q Exit Gaia
   /clear           Clear current session
   /session         Manage sessions (list, new, switch)
   /tools           List available tools
@@ -287,7 +287,7 @@ func (r *REPL) ProcessStream(ctx context.Context, input string) error {
 		return err
 	}
 
-	fmt.Print(r.aiStyle.Render("Assistant: "))
+	fmt.Print(r.aiStyle.Render("Gaia: "))
 
 	for chunk := range stream {
 		if chunk.Error != nil {

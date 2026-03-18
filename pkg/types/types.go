@@ -1,4 +1,4 @@
-// Package types provides common types used across the assistant
+// Package types provides common types used across Gaia
 package types
 
 import (
@@ -106,7 +106,7 @@ type PermissionResponse struct {
 	Reason  string `json:"reason,omitempty"`
 }
 
-// Response represents a response from the assistant
+// Response represents a response from Gaia
 type Response struct {
 	Content    string       `json:"content"`
 	ToolCalls  []ToolCall   `json:"tool_calls,omitempty"`

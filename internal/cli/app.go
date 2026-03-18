@@ -8,10 +8,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"partner/internal/config"
-	"partner/internal/core"
-	"partner/internal/plugin"
-	"partner/internal/tool"
+	"gaia/internal/config"
+	"gaia/internal/core"
+	"gaia/internal/plugin"
+	"gaia/internal/tool"
 
 	"github.com/spf13/cobra"
 )
@@ -27,9 +27,9 @@ type App struct {
 func NewApp() *App {
 	app := &App{
 		rootCmd: &cobra.Command{
-			Use:   "assistant",
-			Short: "AI Assistant CLI",
-			Long:  "An AI-powered assistant for daily tasks, code writing, and automation",
+			Use:   "gaia",
+			Short: "Gaia (盖娅) - AI 智能助手",
+			Long:  "Gaia 是一个 AI 智能助手，支持日常任务自动化、代码编写和自动化操作",
 		},
 	}
 
@@ -61,7 +61,7 @@ func (a *App) chatCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "chat",
 		Short: "Start an interactive chat session",
-		Long:  "Start an interactive chat session with the AI assistant",
+		Long:  "Start an interactive chat session with Gaia",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Load configuration
 			var err error
@@ -199,7 +199,7 @@ func (a *App) versionCmd() *cobra.Command {
 		Use:   "version",
 		Short: "Print version information",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("AI Assistant v1.0.0")
+			fmt.Println("Gaia (盖娅) v1.0.0")
 		},
 	}
 }

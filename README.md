@@ -1,6 +1,6 @@
-# AI Assistant
+# Gaia (盖娅)
 
-An AI-powered assistant tool similar to Claude Code / OpenClaw, supporting:
+Gaia 是一个 AI 智能助手工具，类似于 Claude Code / OpenClaw，支持：
 - Daily work automation (file organization, email handling)
 - Code writing, modification, testing, and architecture design
 - OpenAI-compatible backend model interface
@@ -18,7 +18,7 @@ make deps
 make build
 
 # Run
-./build/assistant chat
+./build/gaia chat
 
 # Or run directly
 make dev

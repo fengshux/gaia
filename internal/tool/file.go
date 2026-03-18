@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"partner/pkg/utils"
+	"gaia/pkg/utils"
 )
 
 // FileReadTool reads a file

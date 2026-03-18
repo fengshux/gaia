@@ -9,7 +9,7 @@ import (
 
 // Config represents the main configuration
 type Config struct {
-	Assistant  AssistantConfig  `mapstructure:"assistant"`
+	Gaia       GaiaConfig       `mapstructure:"gaia"`
 	LLM        LLMConfig        `mapstructure:"llm"`
 	Plugins    PluginsConfig    `mapstructure:"plugins"`
 	MCP        MCPConfig        `mapstructure:"mcp"`
@@ -18,8 +18,8 @@ type Config struct {
 	Logging    LoggingConfig    `mapstructure:"logging"`
 }
 
-// AssistantConfig represents assistant configuration
-type AssistantConfig struct {
+// GaiaConfig represents Gaia configuration
+type GaiaConfig struct {
 	Name    string `mapstructure:"name"`
 	Version string `mapstructure:"version"`
 }
@@ -76,8 +76,8 @@ type LoggingConfig struct {
 // DefaultConfig returns the default configuration
 func DefaultConfig() *Config {
 	return &Config{
-		Assistant: AssistantConfig{
-			Name:    "AI Assistant",
+		Gaia: GaiaConfig{
+			Name:    "Gaia",
 			Version: "1.0.0",
 		},
 		LLM: LLMConfig{
@@ -103,7 +103,7 @@ func DefaultConfig() *Config {
 		},
 		Storage: StorageConfig{
 			Type: "sqlite",
-			Path: "./data/assistant.db",
+			Path: "./data/gaia.db",
 		},
 		Logging: LoggingConfig{
 			Level:  "info",

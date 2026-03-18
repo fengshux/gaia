@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"partner/pkg/utils"
+	"gaia/pkg/utils"
 
 	"github.com/spf13/viper"
 )
@@ -48,11 +48,11 @@ func (l *Loader) Load() (*Config, error) {
 		// Check home directory
 		home, err := os.UserHomeDir()
 		if err == nil {
-			v.AddConfigPath(filepath.Join(home, ".assistant"))
+			v.AddConfigPath(filepath.Join(home, ".gaia"))
 		}
 
 		// Check config directories
-		v.AddConfigPath("/etc/assistant")
+		v.AddConfigPath("/etc/gaia")
 	}
 
 	// Read config file
@@ -85,8 +85,8 @@ func (l *Loader) Load() (*Config, error) {
 
 // setDefaults sets default values in viper
 func setDefaults(v *viper.Viper, cfg *Config) {
-	v.SetDefault("assistant.name", cfg.Assistant.Name)
-	v.SetDefault("assistant.version", cfg.Assistant.Version)
+	v.SetDefault("gaia.name", cfg.Gaia.Name)
+	v.SetDefault("gaia.version", cfg.Gaia.Version)
 
 	v.SetDefault("llm.provider", cfg.LLM.Provider)
 	v.SetDefault("llm.model", cfg.LLM.Model)

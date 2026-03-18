@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"strings"
 
-	"partner/internal/config"
-	"partner/pkg/types"
-	"partner/pkg/utils"
+	"gaia/internal/config"
+	"gaia/pkg/types"
+	"gaia/pkg/utils"
 )
 
 // PermissionManager handles permission checks

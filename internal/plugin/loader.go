@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"plugin"
 
-	"partner/pkg/utils"
+	"gaia/pkg/utils"
 )
 
 // Loader loads plugins from filesystem

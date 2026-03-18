@@ -6,13 +6,13 @@ import (
 	"fmt"
 	"sync"
 
-	"partner/internal/config"
-	"partner/internal/llm"
-	"partner/internal/plugin"
-	"partner/pkg/types"
+	"gaia/internal/config"
+	"gaia/internal/llm"
+	"gaia/internal/plugin"
+	"gaia/pkg/types"
 )
 
-// Engine is the main AI assistant engine
+// Engine is the main Gaia AI engine
 type Engine struct {
 	mu       sync.RWMutex
 	config   *config.Config

@@ -1,7 +1,7 @@
-# AI Assistant Configuration
+# Gaia (盖娅) Configuration
 
-assistant:
-  name: "AI Assistant"
+gaia:
+  name: "Gaia"
   version: "1.0.0"
 
 llm:
@@ -38,7 +38,7 @@ permissions:
 
 storage:
   type: "sqlite"
-  path: "./data/assistant.db"
+  path: "./data/gaia.db"
 
 logging:
   level: "info"

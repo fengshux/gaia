@@ -24,7 +24,7 @@ type Styles struct {
 	Code      lipgloss.Style
 	Tool      lipgloss.Style
 	User      lipgloss.Style
-	Assistant lipgloss.Style
+	Gaia      lipgloss.Style
 }
 
 // NewRenderer creates a new renderer
@@ -52,7 +52,7 @@ func NewRenderer() *Renderer {
 				Foreground(lipgloss.Color("11")),
 			User: lipgloss.NewStyle().
 				Foreground(lipgloss.Color("10")),
-			Assistant: lipgloss.NewStyle().
+			Gaia: lipgloss.NewStyle().
 				Foreground(lipgloss.Color("6")),
 		},
 	}
@@ -103,9 +103,9 @@ func (r *Renderer) User(text string) string {
 	return r.styles.User.Render("You: ") + text
 }
 
-// Assistant renders assistant message
-func (r *Renderer) Assistant(text string) string {
-	return r.styles.Assistant.Render("Assistant: ") + text
+// Gaia renders Gaia message
+func (r *Renderer) Gaia(text string) string {
+	return r.styles.Gaia.Render("Gaia: ") + text
 }
 
 // Table renders a simple table

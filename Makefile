@@ -9,11 +9,11 @@ GOGET=$(GOCMD) get
 GOMOD=$(GOCMD) mod
 
 # Binary names
-BINARY_NAME=assistant
+BINARY_NAME=gaia
 BINARY_UNIX=$(BINARY_NAME)_unix
 
 # Main package
-MAIN_PACKAGE=./cmd/assistant
+MAIN_PACKAGE=./cmd/gaia
 
 # Build directory
 BUILD_DIR=./build

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"partner/pkg/types"
+	"gaia/pkg/types"
 )
 
 // ContextManager manages conversation context

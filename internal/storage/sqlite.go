@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"sync"
 
-	"partner/pkg/utils"
+	"gaia/pkg/utils"
 
 	_ "github.com/mattn/go-sqlite3"
 )

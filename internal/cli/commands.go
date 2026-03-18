@@ -7,9 +7,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"partner/internal/config"
-	"partner/internal/mcp"
-	"partner/internal/tool"
+	"gaia/internal/config"
+	"gaia/internal/mcp"
+	"gaia/internal/tool"
 
 	"github.com/charmbracelet/lipgloss"
 	"gopkg.in/yaml.v3"
@@ -22,8 +22,8 @@ func printConfig(cfg *config.Config) {
 		Bold(true)
 
 	fmt.Println(style.Render("Configuration:"))
-	fmt.Printf("  Name: %s\n", cfg.Assistant.Name)
-	fmt.Printf("  Version: %s\n", cfg.Assistant.Version)
+	fmt.Printf("  Name: %s\n", cfg.Gaia.Name)
+	fmt.Printf("  Version: %s\n", cfg.Gaia.Version)
 	fmt.Println()
 	fmt.Println(style.Render("LLM:"))
 	fmt.Printf("  Provider: %s\n", cfg.LLM.Provider)
@@ -53,7 +53,7 @@ func initConfig() error {
 		return err
 	}
 
-	configDir := filepath.Join(home, ".assistant")
+	configDir := filepath.Join(home, ".gaia")
 	configPath := filepath.Join(configDir, "config.yaml")
 
 	// Check if config already exists
@@ -68,7 +68,7 @@ func initConfig() error {
 
 	// Create default config
 	cfg := config.DefaultConfig()
-	cfg.Storage.Path = filepath.Join(configDir, "assistant.db")
+	cfg.Storage.Path = filepath.Join(configDir, "gaia.db")
 	cfg.Plugins.Directory = filepath.Join(configDir, "plugins")
 
 	// Write config
@@ -91,7 +91,7 @@ func initConfig() error {
 
 // startMCPServer starts the MCP server
 func startMCPServer(addr string) error {
-	server := mcp.NewServer("AI Assistant", "1.0.0")
+	server := mcp.NewServer("Gaia", "1.0.0")
 
 	// Register tools
 	server.RegisterTool(mcp.ToolDefinition{

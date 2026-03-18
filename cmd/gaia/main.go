@@ -1,11 +1,11 @@
-// Package main is the entry point for the AI Assistant CLI
+// Package main is the entry point for the Gaia CLI
 package main
 
 import (
 	"fmt"
 	"os"
 
-	"partner/internal/cli"
+	"gaia/internal/cli"
 )
 
 func main() {

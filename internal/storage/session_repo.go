@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"time"
 
-	"partner/pkg/types"
-	"partner/pkg/utils"
+	"gaia/pkg/types"
+	"gaia/pkg/utils"
 )
 
 // SessionRepository handles session persistence

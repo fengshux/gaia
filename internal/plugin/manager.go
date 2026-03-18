@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"sync"
 
-	"partner/pkg/types"
+	"gaia/pkg/types"
 )
 
 // Manager manages plugins and their tools

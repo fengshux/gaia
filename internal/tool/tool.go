@@ -4,7 +4,7 @@ package tool
 import (
 	"context"
 
-	"partner/pkg/types"
+	"gaia/pkg/types"
 )
 
 // Tool interface for tools

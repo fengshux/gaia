@@ -10,7 +10,7 @@ import (
 	"io"
 	"net/http"
 
-	"partner/pkg/types"
+	"gaia/pkg/types"
 
 	"github.com/go-resty/resty/v2"
 )

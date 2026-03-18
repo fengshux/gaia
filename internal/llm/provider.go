@@ -4,7 +4,7 @@ package llm
 import (
 	"context"
 
-	"partner/pkg/types"
+	"gaia/pkg/types"
 )
 
 // Provider defines the interface for LLM providers
