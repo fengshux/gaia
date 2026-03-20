@@ -175,6 +175,9 @@ func (r *REPL) printWelcome() {
 ╔═══════════════════════════════════════════╗
 ║         Gaia (盖娅) v1.0.0                ║
 ║                                           ║
+║  你好，我是 Gaia。                        ║
+║  你的生活，有序生长。                     ║
+║                                           ║
 ║  Type /help for available commands        ║
 ║  Press Ctrl+C to exit                     ║
 ╚═══════════════════════════════════════════╝

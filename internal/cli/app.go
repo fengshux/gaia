@@ -18,9 +18,11 @@ import (
 
 // App represents the CLI application
 type App struct {
-	rootCmd *cobra.Command
-	engine  *core.Engine
-	config  *config.Config
+	rootCmd           *cobra.Command
+	engine            *core.Engine
+	config            *config.Config
+	defaultSessionID  string
+	defaultConfigFile string
 }
 
 // NewApp creates a new CLI application
@@ -35,7 +37,6 @@ func NewApp() *App {
 
 	// Add subcommands
 	app.rootCmd.AddCommand(
-		app.chatCmd(),
 		app.configCmd(),
 		app.pluginCmd(),
 		app.mcpCmd(),
@@ -45,6 +46,13 @@ func NewApp() *App {
 	// Set version
 	app.rootCmd.Version = "1.0.0"
 
+	// Add flags for default chat behavior
+	app.rootCmd.Flags().StringVarP(&app.defaultSessionID, "session", "s", "", "Session ID to continue")
+	app.rootCmd.Flags().StringVarP(&app.defaultConfigFile, "config", "c", "", "Config file path")
+
+	// Set default run function (chat)
+	app.rootCmd.RunE = app.runChat
+
 	return app
 }
 
@@ -53,63 +61,48 @@ func (a *App) Run() error {
 	return a.rootCmd.Execute()
 }
 
-// chatCmd returns the chat command
-func (a *App) chatCmd() *cobra.Command {
-	var sessionID string
-	var configFile string
-
-	cmd := &cobra.Command{
-		Use:   "chat",
-		Short: "Start an interactive chat session",
-		Long:  "Start an interactive chat session with Gaia",
-		RunE: func(cmd *cobra.Command, args []string) error {
-			// Load configuration
-			var err error
-			if configFile != "" {
-				a.config, err = config.LoadFromPath(configFile)
-			} else {
-				a.config, err = config.LoadDefault()
-			}
-			if err != nil {
-				return fmt.Errorf("failed to load config: %w", err)
-			}
-
-			// Create engine
-			a.engine = core.NewEngine(a.config)
-
-			// Register built-in tools
-			a.registerBuiltinTools()
-
-			// Initialize engine
-			ctx, cancel := context.WithCancel(context.Background())
-			defer cancel()
-
-			if err := a.engine.Initialize(ctx); err != nil {
-				return fmt.Errorf("failed to initialize engine: %w", err)
-			}
-			defer a.engine.Close()
-
-			// Start REPL
-			repl := NewREPL(a.engine, a.config)
-			repl.SessionID = sessionID
-
-			// Handle signals
-			sigCh := make(chan os.Signal, 1)
-			signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
-			go func() {
-				<-sigCh
-				cancel()
-				repl.Close()
-			}()
-
-			return repl.Run(ctx)
-		},
+// runChat is the default chat runner
+func (a *App) runChat(cmd *cobra.Command, args []string) error {
+	// Load configuration
+	var err error
+	if a.defaultConfigFile != "" {
+		a.config, err = config.LoadFromPath(a.defaultConfigFile)
+	} else {
+		a.config, err = config.LoadDefault()
+	}
+	if err != nil {
+		return fmt.Errorf("failed to load config: %w", err)
 	}
 
-	cmd.Flags().StringVarP(&sessionID, "session", "s", "", "Session ID to continue")
-	cmd.Flags().StringVarP(&configFile, "config", "c", "", "Config file path")
+	// Create engine
+	a.engine = core.NewEngine(a.config)
 
-	return cmd
+	// Register built-in tools
+	a.registerBuiltinTools()
+
+	// Initialize engine
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	if err := a.engine.Initialize(ctx); err != nil {
+		return fmt.Errorf("failed to initialize engine: %w", err)
+	}
+	defer a.engine.Close()
+
+	// Start REPL
+	repl := NewREPL(a.engine, a.config)
+	repl.SessionID = a.defaultSessionID
+
+	// Handle signals
+	sigCh := make(chan os.Signal, 1)
+	signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-sigCh
+		cancel()
+		repl.Close()
+	}()
+
+	return repl.Run(ctx)
 }
 
 // configCmd returns the config command
