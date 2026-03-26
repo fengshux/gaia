@@ -10,7 +10,7 @@ import (
 
 	"gaia/pkg/utils"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 )
 
 // SQLiteStorage provides SQLite-based storage
@@ -29,7 +29,7 @@ func NewSQLiteStorage(path string) (*SQLiteStorage, error) {
 	}
 
 	// Open database
-	db, err := sql.Open("sqlite3", path)
+	db, err := sql.Open("sqlite", path)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open database: %w", err)
 	}
